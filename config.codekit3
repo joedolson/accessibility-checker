@@ -3638,7 +3638,7 @@
       }
     },
     "esLintSourceType" : 0,
-    "externalServerAddress" : "http:\/\/accessible.local\/",
+    "externalServerAddress" : "http:\/\/localhost:10020\/wp-admin\/post.php?post=1&action=edit",
     "gitIgnoreBuildFolder" : 1,
     "hideConfigFile" : 0,
     "jsCheckerReservedNamesString" : "",

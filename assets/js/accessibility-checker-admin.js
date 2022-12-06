@@ -151,6 +151,120 @@
           // Ignore submit on click
           ignore_submit();
 
+          // Highlight issue
+          //DOMParser
+          //https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
+          var img = '<img decoding="async" width="384" height="211" src="http://localhost:10020/wp-content/uploads/2022/10/Screen-Shot-2022-11-02-at-3.19.25-PM.png" alt="" class="wp-image-28" srcset="http://localhost:10020/wp-content/uploads/2022/10/Screen-Shot-2022-11-02-at-3.19.25-PM.png 384w, http://localhost:10020/wp-content/uploads/2022/10/Screen-Shot-2022-11-02-at-3.19.25-PM-300x165.png 300w" sizes="(max-width: 384px) 100vw, 384px" />';
+          var a = '<a href="#" data-rich-text-format-boundary="true">bad link</a>';
+          var html = $.parseHTML( a );
+          var nodeNames = [];
+
+          // Gather the parsed HTML's node names
+          /*
+          $.each( html, function( i, el ) {
+            nodeNames[ i ] = el.nodeName;
+          });
+          */
+          var nodeName = html[0].nodeName;
+          
+          console.log(html);
+          console.log(nodeName);
+          console.log(html[0]['id']);
+          console.log(html[0]['classList']);
+          console.log(html[0]['src']);
+          console.log(html[0]['href']);
+
+          var id = html[0]['id'];
+          var classes = html[0]['classList']['value'];
+          var src = html[0]['src'];
+
+          var element_selector = '';
+          
+
+
+          if(nodeName == 'A'){
+            if(id){
+              element_selector += '#'+id;
+            }
+            if(classes){
+              //delete classes['value'];
+              element_selector += '.'+classes.replace(" ",".");
+            }
+          }else if(nodeName == 'IMG' && src){
+            //element_selector = nodeName+'[src="'+src+'"]';
+          }
+
+
+          console.log('Selector:'+element_selector);
+
+          var element = $(element_selector,'.editor-styles-wrapper');
+          element.css('outline','3px dashed red');
+          element.css('outline-offset','2px');
+          
+          $(html).hide();
+
+
+          // Ignore on click
+          $(".edac-details-rule-records-record-actions-highlight").click(function (e) {
+            //e.preventDefault();
+            //$(this).parent().next(".edac-details-rule-records-record-ignore").slideToggle();
+            //(".edac-details-rule-records-record-object")
+
+            var object = $(".edac-details-rule-records-record-object code",$(this).parent().parent()).text();
+            //console.log(object);
+
+            var $log = $( ".edac-summary-total" ),
+            str = object,
+            html = $.parseHTML( str );
+
+            //console.log(html);
+            console.log(Object.keys(html));
+            var element = $(html[0],'.editor-styles-wrapper');
+            //var element = $('a:contains('+html[0].innerText+')','.editor-styles-wrapper');
+            element.css('outline','3px dashed red');
+            element.css('outline-offset','2px');
+
+            /*
+            console.log(element.offset().top);
+            $('.interface-interface-skeleton__content').scroll();
+            $('.interface-interface-skeleton__content').animate({
+              scrollTop: element.offset().top
+            }, 500);
+            */
+
+            /*$('*:contains("<a role="button">")').each(function(){
+              if($(this).children().length < 1) 
+                   $(this).css("border","solid 2px red") });*/
+
+            
+          });
+
+
+          /*
+          var $log = $( ".edac-summary-total" ),
+            str = '<a href="#">testing</a>',
+            html = $.parseHTML( str ),
+            nodeNames = [];
+          
+          // Append the parsed HTML
+          $log.append( html );
+          
+          // Gather the parsed HTML's node names
+          $.each( html, function( i, el ) {
+            nodeNames[ i ] = "<li>" + el.nodeName + "</li>";
+          });
+
+          console.log( html );
+          
+          // Insert the node names
+          $log.append( "<h3>Node Names:</h3>" );
+          $( "<ol></ol>" )
+            .append( nodeNames.join( "" ) )
+            .appendTo( $log );
+
+          $('a:contains('+html[0].innerText+')').css('border','3px dashed red');
+          */
+
         } else {
 
           console.log(response);
