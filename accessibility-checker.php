@@ -1124,6 +1124,7 @@ function edac_details_ajax(){
 									$html .= '<button class="edac-details-rule-records-record-actions-ignore'.$ignore_class.'">'.EDAC_SVG_IGNORE_ICON.'<span class="edac-details-rule-records-record-actions-ignore-label">'.$ignore_label.'</span></button>';
 
 									$html .= '<button class="edac-details-rule-records-record-actions-highlight">Highlight</button>';
+									$html .= '<a href="'.get_the_permalink($postid).'?edac='.$id.'" class="edac-details-rule-records-record-actions-highlight-front">Highlight Front</a>';
 									
 									//edac_log(print_r($row['object']->getAttribute('href')));
 
