@@ -214,6 +214,8 @@ add_action( 'admin_notices', 'edac_password_protected_notice');
 add_action( 'wp_ajax_edac_review_notice_ajax', 'edac_review_notice_ajax' );
 add_action('in_admin_header', 'edac_remove_admin_notices', 1000);
 add_action( 'admin_notices', 'edac_black_friday_notice');
+add_action( 'wp_ajax_edac_frontend_highlight_ajax', 'edac_frontend_highlight_ajax' );
+add_action( 'wp_ajax_nopriv_edac_frontend_highlight_ajax', 'edac_frontend_highlight_ajax' );
 
 /**
  * Create/Update database
@@ -1123,8 +1125,9 @@ function edac_details_ajax(){
 
 									$html .= '<button class="edac-details-rule-records-record-actions-ignore'.$ignore_class.'">'.EDAC_SVG_IGNORE_ICON.'<span class="edac-details-rule-records-record-actions-ignore-label">'.$ignore_label.'</span></button>';
 
-									$html .= '<button class="edac-details-rule-records-record-actions-highlight">Highlight</button>';
-									$html .= '<a href="'.get_the_permalink($postid).'?edac='.$id.'" class="edac-details-rule-records-record-actions-highlight-front">Highlight Front</a>';
+									$html .= '<button class="edac-details-rule-records-record-actions-highlight"><span class="dashicons dashicons-visibility"></span>View</button>';
+
+									$html .= '<a href="'.get_the_permalink($postid).'?edac='.$id.'" class="edac-details-rule-records-record-actions-highlight-front" target="_blank" aria-label="'.__('View, opens a new window','edac').'" ><span class="dashicons dashicons-welcome-view-site"></span>View on page</a>';
 									
 									//edac_log(print_r($row['object']->getAttribute('href')));
 
@@ -1608,4 +1611,62 @@ function edac_black_friday_notice(){
 			<p>Black Friday special: upgrade to a paid version of Accessibility Checker from November 20-30 and get 50% off! Full site scanning, site-wide open issues report, ignore logs, and more. <a href="https://equalizedigital.com/accessibility-checker/pricing/?utm_source=WPadmin&utm_medium=banner&utm_campaign=BlackFriday">Upgrade Now</a></p>
 			</div>';
 	}
+}
+
+/**
+ * Review Admin Notice Ajax
+ *
+ * @return void
+ * 
+ *  - '-1' means that nonce could not be varified
+ *  - '-2' means that the review action value was not specified
+ *  - '-3' means that update option wasn't successful
+ */
+function edac_frontend_highlight_ajax(){
+
+	// nonce security
+	if ( !isset( $_REQUEST['nonce'] ) || !wp_verify_nonce( $_REQUEST['nonce'], 'ajax-nonce' ) ) {
+		
+		$error = new WP_Error( '-1', 'Permission Denied' );
+		wp_send_json_error( $error );
+
+	}
+
+	if ( ! isset( $_REQUEST['id'] ) ) {
+	
+		$error = new WP_Error( '-2', 'The id value was not set' );
+		wp_send_json_error( $error );
+
+	}
+	/*
+	$results = update_option( 'edac_review_notice', $_REQUEST['review_action'] );
+
+	if($_REQUEST['review_action'] == 'pause'){
+		set_transient('edac_review_notice_reminder', true, 14 * DAY_IN_SECONDS);
+	}
+	*/
+
+	//$results = 'Test';
+
+	$html = '';
+	global $wpdb;
+	$table_name = $wpdb->prefix . "accessibility_checker";
+	$id = intval($_REQUEST['id']);
+	$siteid = get_current_blog_id();
+
+	$results = $wpdb->get_row( $wpdb->prepare( 'SELECT object FROM '.$table_name.' where id = %d and siteid = %d', $id, $siteid), ARRAY_A );
+	
+
+	$results = html_entity_decode(esc_html($results['object']));
+	edac_log($results);
+	
+	if( !$results ){
+
+		$error = new WP_Error( '-3', 'Object query returned no results' );
+		wp_send_json_error( $error );
+
+	}
+
+	wp_send_json_success( json_encode($results) );
+
 }

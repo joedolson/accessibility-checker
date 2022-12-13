@@ -47,7 +47,8 @@ function edac_enqueue_scripts(){
 		'edac_script_vars',
 		array(
 			'postID' => $post_id,
-			'nonce' => wp_create_nonce('ajax-nonce')
+			'nonce' => wp_create_nonce('ajax-nonce'),
+			'ajaxurl' => admin_url('admin-ajax.php')
 		)
 	);
 }
