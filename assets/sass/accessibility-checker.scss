@@ -1,2 +1,13 @@
 @import "variables";
 @import "helpers";
+
+.edac-highlight{
+    &-btn{
+        &-warning{
+
+        }
+        &-error{
+
+        }
+    }
+}

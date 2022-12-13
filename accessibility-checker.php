@@ -1638,15 +1638,6 @@ function edac_frontend_highlight_ajax(){
 		wp_send_json_error( $error );
 
 	}
-	/*
-	$results = update_option( 'edac_review_notice', $_REQUEST['review_action'] );
-
-	if($_REQUEST['review_action'] == 'pause'){
-		set_transient('edac_review_notice_reminder', true, 14 * DAY_IN_SECONDS);
-	}
-	*/
-
-	//$results = 'Test';
 
 	$html = '';
 	global $wpdb;
@@ -1654,11 +1645,18 @@ function edac_frontend_highlight_ajax(){
 	$id = intval($_REQUEST['id']);
 	$siteid = get_current_blog_id();
 
-	$results = $wpdb->get_row( $wpdb->prepare( 'SELECT object FROM '.$table_name.' where id = %d and siteid = %d', $id, $siteid), ARRAY_A );
-	
+	$results = $wpdb->get_row( $wpdb->prepare( 'SELECT id, rule, object, ruletype FROM '.$table_name.' where id = %d and siteid = %d', $id, $siteid), ARRAY_A );
 
-	$results = html_entity_decode(esc_html($results['object']));
-	edac_log($results);
+	$rules = edac_register_rules();
+
+	$rule = edac_filter_by_value($rules, 'slug', $results['rule'])[0];
+
+	$results['rule_title'] = $rule['title'];
+
+	$results['object'] = html_entity_decode(esc_html($results['object']));
+	//edac_log($results);
+
+	//edac_log($results);
 	
 	if( !$results ){
 

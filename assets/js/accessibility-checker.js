@@ -34,7 +34,7 @@
 
                 console.log(response_json);
 
-                var html = $.parseHTML( response_json );
+                var html = $.parseHTML( response_json.object );
 
                 var nodeName = html[0].nodeName;
             
@@ -48,7 +48,7 @@
                 //console.log(html[0]['attributes']);
 
                 var element_selector = nodeName;
-                var atributes_allowed = ['href','src', 'alt', 'aria-hidden', 'role', 'focusable'];
+                var atributes_allowed = ['href','src', 'alt', 'aria-hidden', 'role', 'focusable', 'width', 'height'];
                 
                 
                 if(id && nodeName != 'IMG'){
@@ -78,12 +78,25 @@
                 console.log('Selector:'+element_selector);
 
                 var element = $(element_selector);
-                element.css('outline','3px dashed red').css('outline-offset','2px');
-                element.focus();
+                if(element.length){
+                    var element_border_color = 'red';
+                    if(response_json.ruletype == 'error'){
+                        element_border_color = 'red';
+                    }else if(response_json.ruletype == 'warning'){
+                        element_border_color = 'orange';
+                    }
+                    element.css('outline','5px solid '+element_border_color).css('outline-offset','2px');
+                    element.focus();
 
-                $([document.documentElement, document.body]).animate({
-                    scrollTop: $(element).offset().top-50
-                }, 0);
+                    element.append('<div class="edac-highlight"><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'">'+response_json.rule_title+'</button></div>');
+
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $(element).offset().top-50
+                    }, 0);
+                    
+                }else{
+                    alert('Accessibility Checker con not find the element on the page.');
+                }                
             
             } else {
                 console.log(response);
