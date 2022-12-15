@@ -85,14 +85,18 @@
                     }else if(response_json.ruletype == 'warning'){
                         element_border_color = 'orange';
                     }
-                    element.css('outline','5px solid '+element_border_color).css('outline-offset','2px');
-                    element.focus();
+                    //element.css('outline','5px solid '+element_border_color).css('outline-offset','2px');
+                    
 
-                    element.append('<div class="edac-highlight"><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'">'+response_json.rule_title+'</button></div>');
+                    element.wrap('<div class="edac-highlight edac-highlight-'+response_json.ruletype+'"></div>');
+
+                    element.before('<div><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'" aria-label="'+response_json.rule_title+'"></button></div>');
 
                     $([document.documentElement, document.body]).animate({
                         scrollTop: $(element).offset().top-50
                     }, 0);
+
+                    element.focus();
                     
                 }else{
                     alert('Accessibility Checker con not find the element on the page.');

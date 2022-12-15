@@ -37,6 +37,18 @@
       "oF" : 0,
       "pg" : 0
     },
+    "\/assets\/css\/accessibility-checker.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/assets\/css\/accessibility-checker-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
     "\/assets\/images\/checkmark icon green.png" : {
       "ft" : 32768,
       "iS" : 14817,
