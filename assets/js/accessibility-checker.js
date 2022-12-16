@@ -90,7 +90,8 @@
 
                     element.wrap('<div class="edac-highlight edac-highlight-'+response_json.ruletype+'"></div>');
 
-                    element.before('<div><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'" aria-label="'+response_json.rule_title+'"></button></div>');
+
+                    element.before('<div><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'" aria-label="'+response_json.rule_title+'"></button><div class="edac-highlight-tooltip"><strong>'+response_json.rule_title+'</strong><a href="'+response_json.link+'" class="" target="_blank" aria-label="Read documentation for '+response_json.rule_title+', opens new window"><span class="dashicons dashicons-info"></span></a><br /><span>'+response_json.summary+'</span></div></div>');
 
                     $([document.documentElement, document.body]).animate({
                         scrollTop: $(element).offset().top-50

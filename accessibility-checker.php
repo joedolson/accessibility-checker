@@ -944,6 +944,21 @@ function edac_update_post_meta($rule){
 }
 
 /**
+ * Documentation Link
+ *
+ * @param array $rule
+ * @return void
+ */
+function edac_documentation_link($rule){
+	global $wp_version;
+	$days_active = edac_days_active();
+
+	if(!$rule['info_url'] || !isset($rule['slug'])) return '';
+
+	return $rule['info_url'].'?utm_source=accessibility-checker&utm_medium=software&utm_term='.esc_html($rule['slug']).'&utm_content=content-analysis&utm_campaign=wordpress-general&php_version='.PHP_VERSION.'&platform=wordpress&platform_version='.$wp_version.'&software=free&software_version='.EDAC_VERSION.'&days_active='.$days_active.'';
+}
+
+/**
  * Details Ajax
  *
  * @return void
@@ -1042,8 +1057,6 @@ function edac_details_ajax(){
 	$rules = array_merge($error_rules, $warning_rules, $passed_rules);
 
 	if($rules){
-		global $wp_version;
-		$days_active = edac_days_active();
 		$ignore_permission = true;
 		if(has_filter('edac_ignore_permission')){
 			$ignore_permission = apply_filters('edac_ignore_permission', $ignore_permission);
@@ -1065,7 +1078,7 @@ function edac_details_ajax(){
 			
 			$expand_rule = count($wpdb->get_results( $wpdb->prepare( 'SELECT id FROM '.$table_name.' where postid = %d and rule = %s and siteid = %d', $postid, $rule['slug'], $siteid), ARRAY_A ));
 
-			$tool_tip_link = $rule['info_url'].'?utm_source=accessibility-checker&utm_medium=software&utm_term='.esc_html($rule['slug']).'&utm_content=content-analysis&utm_campaign=wordpress-general&php_version='.PHP_VERSION.'&platform=wordpress&platform_version='.$wp_version.'&software=free&software_version='.EDAC_VERSION.'&days_active='.$days_active.'';
+			$tool_tip_link = edac_documentation_link($rule);
 
 			$html .= '<div class="edac-details-rule">';
 
@@ -1652,6 +1665,8 @@ function edac_frontend_highlight_ajax(){
 	$rule = edac_filter_by_value($rules, 'slug', $results['rule'])[0];
 
 	$results['rule_title'] = $rule['title'];
+	$results['summary'] = $rule['summary'];
+	$results['link'] = edac_documentation_link($rule);
 
 	$results['object'] = html_entity_decode(esc_html($results['object']));
 	//edac_log($results);

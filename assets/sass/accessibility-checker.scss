@@ -6,6 +6,7 @@
     clear: both;
     outline: dashed 3px transparent;
     outline-offset: 5px;
+    position: relative;
     &-error{
         outline-color: $color-red;
         .edac-highlight-btn{
@@ -36,6 +37,29 @@
         }
         &-error{
 
+        }
+    }
+    &-tooltip{
+        color: $color-white;
+        background-color: $color-blue-dark;
+        position: absolute;
+        font-size: .75em !important;
+        font-family: sans-serif;
+        padding: 10px 15px;
+        top: 0;
+        left: 50px;
+        border-radius: 5px;
+        z-index: 99;
+        &:before{
+            content: '';
+            width: 0; 
+            height: 0; 
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent; 
+            border-right:8px solid $color-blue-dark;
+            position: absolute;
+            left: -8px;
+            top: 12px;
         }
     }
 }

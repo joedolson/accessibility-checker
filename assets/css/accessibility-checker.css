@@ -2,7 +2,8 @@
   display: block;
   clear: both;
   outline: dashed 3px transparent;
-  outline-offset: 5px; }
+  outline-offset: 5px;
+  position: relative; }
   .edac-highlight-error {
     outline-color: #b30f0f; }
     .edac-highlight-error .edac-highlight-btn {
@@ -21,3 +22,24 @@
     font-size: 0;
     border-radius: 50%;
     margin-bottom: 7px; }
+  .edac-highlight-tooltip {
+    color: #ffffff;
+    background-color: #072446;
+    position: absolute;
+    font-size: .75em !important;
+    font-family: sans-serif;
+    padding: 10px 15px;
+    top: 0;
+    left: 50px;
+    border-radius: 5px;
+    z-index: 99; }
+    .edac-highlight-tooltip:before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 8px solid #072446;
+      position: absolute;
+      left: -8px;
+      top: 12px; }
