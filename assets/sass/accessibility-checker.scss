@@ -6,16 +6,18 @@
     clear: both;
     outline: dashed 3px transparent;
     outline-offset: 5px;
-    position: relative;
+    //position: relative;
+    //outline-color: #ff00ff;
+    outline-color: magenta;
     &-error{
-        outline-color: $color-red;
+        //outline-color: $color-red;
         .edac-highlight-btn{
             background: $color-red url("../images/error icon white.png") center center no-repeat;
             background-size: 34px 34px;
         }
     }
     &-warning{
-        outline-color: $color-orange;
+        //outline-color: $color-orange;
         .edac-highlight-btn{
             background: $color-orange url("../images/warning icon navy.png") center center no-repeat !important;
             border: solid 3px $color-blue-dark !important;
@@ -38,8 +40,15 @@
         &-error{
 
         }
+        &:hover{
+            .edac-highlight-btn{
+                display: block;
+            }
+        }
     }
     &-tooltip{
+        display: none;
+        max-width: 400px;
         color: $color-white;
         background-color: $color-blue-dark;
         position: absolute;

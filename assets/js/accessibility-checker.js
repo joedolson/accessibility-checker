@@ -93,6 +93,12 @@
 
                     element.before('<div><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'" aria-label="'+response_json.rule_title+'"></button><div class="edac-highlight-tooltip"><strong>'+response_json.rule_title+'</strong><a href="'+response_json.link+'" class="" target="_blank" aria-label="Read documentation for '+response_json.rule_title+', opens new window"><span class="dashicons dashicons-info"></span></a><br /><span>'+response_json.summary+'</span></div></div>');
 
+                    $(".edac-highlight-btn").mouseover(function(e) {
+                        //$(this).parent('.edac-highlight-tooltip').show();
+                        console.log( $(this).parent().next(".edac-highlight-tooltip"));
+                        $(this).next(".edac-highlight-tooltip").fadeIn();
+                    });
+
                     $([document.documentElement, document.body]).animate({
                         scrollTop: $(element).offset().top-50
                     }, 0);
@@ -108,6 +114,7 @@
             }
         });
     }
+
 
   });
 })(jQuery);
