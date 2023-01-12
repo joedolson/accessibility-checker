@@ -91,12 +91,35 @@
                     element.wrap('<div class="edac-highlight edac-highlight-'+response_json.ruletype+'"></div>');
 
 
-                    element.before('<div><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'" aria-label="'+response_json.rule_title+'"></button><div class="edac-highlight-tooltip"><strong>'+response_json.rule_title+'</strong><a href="'+response_json.link+'" class="" target="_blank" aria-label="Read documentation for '+response_json.rule_title+', opens new window"><span class="dashicons dashicons-info"></span></a><br /><span>'+response_json.summary+'</span></div></div>');
+                    element.before('<div class="edac-highlight-tooltip-wrap" style="border: solid 1px red;"><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'" aria-label="'+response_json.rule_title+'"></button><div class="edac-highlight-tooltip"><strong>'+response_json.rule_title+'</strong><a href="'+response_json.link+'" class="" target="_blank" aria-label="Read documentation for '+response_json.rule_title+', opens new window"><span class="dashicons dashicons-info"></span></a><br /><span>'+response_json.summary+'</span></div></div>');
+
+                    var is_hovered = false;
 
                     $(".edac-highlight-btn").mouseover(function(e) {
                         //$(this).parent('.edac-highlight-tooltip').show();
                         console.log( $(this).parent().next(".edac-highlight-tooltip"));
                         $(this).next(".edac-highlight-tooltip").fadeIn();
+                        var position = $(this).position();
+                        var x = position.left + $(this).width();
+                        var y = position.top;
+
+                        $(this).next(".edac-highlight-tooltip").css( { left: x + "px", top: y + "px" } );
+
+                        $(this).next(".edac-highlight-tooltip").mouseover(function(e) {
+                            is_hovered = true;
+                            console.log(is_hovered);
+                        });
+                        // $(this).next(".edac-highlight-tooltip").mouseout(function(e) {
+                        //     is_hovered = false;
+                        //     console.log(is_hovered);
+                        // });
+
+                    });
+
+                    $(".edac-highlight-tooltip-wrap").mouseleave(function(e) {
+                        //if(is_hovered == false){
+                            $(this).next(".edac-highlight-tooltip").fadeOut();
+                        //}
                     });
 
                     $([document.documentElement, document.body]).animate({
