@@ -30,10 +30,11 @@
             data: { action: 'edac_frontend_highlight_ajax', id: edac_id, nonce: edac_script_vars.nonce }
         }).done(function( response ) {
             if( true === response.success ) {
-                let response_json = $.parseJSON( response.data );
 
+                let response_json = $.parseJSON( response.data );
                 console.log(response_json);
 
+                // parse the response
                 var html = $.parseHTML( response_json.object );
 
                 var nodeName = html[0].nodeName;
@@ -93,6 +94,12 @@
 
                     element.before('<div class="edac-highlight-tooltip-wrap"><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'" aria-label="'+response_json.rule_title+'" aria-describedby="edac-highlight-tooltip-'+response_json.id+'"></button><div class="edac-highlight-tooltip" role="tooltip" id="edac-highlight-tooltip-'+response_json.id+'"><strong class="edac-highlight-tooltip-title">'+response_json.rule_title+'</strong><a href="'+response_json.link+'" class="edac-highlight-tooltip-reference" target="_blank" aria-label="Read documentation for '+response_json.rule_title+', opens new window"><span class="dashicons dashicons-info"></span></a><br /><span>'+response_json.summary+'</span></div></div>');
 
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $(element).offset().top-50
+                    }, 0);
+
+                    element.focus();
+
                     // tooltip: hide
                     $('.edac-highlight-tooltip').hide();
 
@@ -136,13 +143,6 @@
                     $('.edac-highlight-tooltip').focusin(function () {
                         clearTimeout(timeout);
                     }).focusout(edac_tooltip_hide);
-
-
-                    $([document.documentElement, document.body]).animate({
-                        scrollTop: $(element).offset().top-50
-                    }, 0);
-
-                    element.focus();
                     
                 }else{
                     alert('Accessibility Checker con not find the element on the page.');
