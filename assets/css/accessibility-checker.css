@@ -1,7 +1,7 @@
 .edac-highlight {
   display: block;
   clear: both;
-  outline: dashed 3px transparent;
+  outline: dashed 4px transparent;
   outline-offset: 5px;
   outline-color: magenta; }
   .edac-highlight-error .edac-highlight-btn {
@@ -21,19 +21,17 @@
     .edac-highlight-btn:hover .edac-highlight-btn {
       display: block; }
   .edac-highlight-tooltip {
-    display: none;
     max-width: 400px;
     color: #ffffff;
     background-color: #072446;
     position: absolute;
-    font-size: .75em !important;
+    font-size: .7em !important;
     font-family: sans-serif;
     padding: 10px 15px;
     top: 0;
     left: 50px;
     border-radius: 5px;
-    z-index: 99;
-    border: solid 1px red; }
+    z-index: 99; }
     .edac-highlight-tooltip:before {
       content: '';
       width: 0;
@@ -44,3 +42,14 @@
       position: absolute;
       left: -8px;
       top: 12px; }
+    .edac-highlight-tooltip-title {
+      font-size: 1.1em !important; }
+    .edac-highlight-tooltip-reference {
+      color: #f3cd1e;
+      text-decoration: none;
+      margin-left: 5px;
+      border-radius: 50%; }
+      .edac-highlight-tooltip-reference:hover, .edac-highlight-tooltip-reference:focus {
+        color: #ffffff; }
+      .edac-highlight-tooltip-reference:focus {
+        outline: solid 2px #f3cd1e; }

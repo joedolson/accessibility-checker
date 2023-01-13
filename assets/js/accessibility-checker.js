@@ -91,36 +91,52 @@
                     element.wrap('<div class="edac-highlight edac-highlight-'+response_json.ruletype+'"></div>');
 
 
-                    element.before('<div class="edac-highlight-tooltip-wrap" style="border: solid 1px red;"><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'" aria-label="'+response_json.rule_title+'"></button><div class="edac-highlight-tooltip"><strong>'+response_json.rule_title+'</strong><a href="'+response_json.link+'" class="" target="_blank" aria-label="Read documentation for '+response_json.rule_title+', opens new window"><span class="dashicons dashicons-info"></span></a><br /><span>'+response_json.summary+'</span></div></div>');
+                    element.before('<div class="edac-highlight-tooltip-wrap"><button class="edac-highlight-btn edac-highlight-btn-'+response_json.ruletype+'" aria-label="'+response_json.rule_title+'" aria-describedby="edac-highlight-tooltip-'+response_json.id+'"></button><div class="edac-highlight-tooltip" role="tooltip" id="edac-highlight-tooltip-'+response_json.id+'"><strong class="edac-highlight-tooltip-title">'+response_json.rule_title+'</strong><a href="'+response_json.link+'" class="edac-highlight-tooltip-reference" target="_blank" aria-label="Read documentation for '+response_json.rule_title+', opens new window"><span class="dashicons dashicons-info"></span></a><br /><span>'+response_json.summary+'</span></div></div>');
 
-                    var is_hovered = false;
+                    // tooltip: hide
+                    $('.edac-highlight-tooltip').hide();
 
-                    $(".edac-highlight-btn").mouseover(function(e) {
-                        //$(this).parent('.edac-highlight-tooltip').show();
-                        console.log( $(this).parent().next(".edac-highlight-tooltip"));
-                        $(this).next(".edac-highlight-tooltip").fadeIn();
-                        var position = $(this).position();
-                        var x = position.left + $(this).width();
+                    // tooltip: position
+                    function edac_tooltip_position(tooltip){
+                        tooltip.next(".edac-highlight-tooltip").fadeIn();
+                        var position = tooltip.position();
+                        var x = position.left + tooltip.width() + 10;
                         var y = position.top;
+                        tooltip.next(".edac-highlight-tooltip").css( { left: x + "px", top: y + "px" } );
+                    }
 
-                        $(this).next(".edac-highlight-tooltip").css( { left: x + "px", top: y + "px" } );
+                    // tooltip: hide
+                    var timeout;
+                    function edac_tooltip_hide() {
+                        timeout = setTimeout(function () {
+                            $('.edac-highlight-tooltip').fadeOut(400);
+                        }, 400);
+                    };
 
-                        $(this).next(".edac-highlight-tooltip").mouseover(function(e) {
-                            is_hovered = true;
-                            console.log(is_hovered);
-                        });
-                        // $(this).next(".edac-highlight-tooltip").mouseout(function(e) {
-                        //     is_hovered = false;
-                        //     console.log(is_hovered);
-                        // });
+                    // tooltip: btn hover
+                    $(".edac-highlight-btn").mouseover(function () {
+                        edac_tooltip_position($(this));
+                        clearTimeout(timeout);
+                        $(this).next('.edac-highlight-tooltip').fadeIn(400);
+                    }).mouseout(edac_tooltip_hide);
 
-                    });
+                    // tooltip: hover
+                    $('.edac-highlight-tooltip').mouseover(function () {
+                        clearTimeout(timeout);
+                    }).mouseout(edac_tooltip_hide);
 
-                    $(".edac-highlight-tooltip-wrap").mouseleave(function(e) {
-                        //if(is_hovered == false){
-                            $(this).next(".edac-highlight-tooltip").fadeOut();
-                        //}
-                    });
+                     // tooltip: btn focus
+                    $(".edac-highlight-btn").focusin(function () {
+                        edac_tooltip_position($(this));
+                        clearTimeout(timeout);
+                        $(this).next('.edac-highlight-tooltip').fadeIn(400);
+                    }).focusout(edac_tooltip_hide);
+
+                    // tooltip: focus
+                    $('.edac-highlight-tooltip').focusin(function () {
+                        clearTimeout(timeout);
+                    }).focusout(edac_tooltip_hide);
+
 
                     $([document.documentElement, document.body]).animate({
                         scrollTop: $(element).offset().top-50

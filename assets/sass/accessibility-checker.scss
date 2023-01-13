@@ -4,7 +4,7 @@
 .edac-highlight{
     display: block;
     clear: both;
-    outline: dashed 3px transparent;
+    outline: dashed 4px transparent;
     outline-offset: 5px;
     //position: relative;
     //outline-color: #ff00ff;
@@ -47,19 +47,17 @@
         }
     }
     &-tooltip{
-        display: none;
         max-width: 400px;
         color: $color-white;
         background-color: $color-blue-dark;
         position: absolute;
-        font-size: .75em !important;
+        font-size: .7em !important;
         font-family: sans-serif;
         padding: 10px 15px;
         top: 0;
         left: 50px;
         border-radius: 5px;
         z-index: 99;
-        border: solid 1px red;
         &:before{
             content: '';
             width: 0; 
@@ -70,6 +68,21 @@
             position: absolute;
             left: -8px;
             top: 12px;
+        }
+        &-title{
+            font-size: 1.1em !important;
+        }
+        &-reference{
+            color: $color-yellow;
+            text-decoration: none;
+            margin-left: 5px;
+            border-radius: 50%;
+            &:hover, &:focus{
+                color: $color-white;
+            }
+            &:focus{
+                outline: solid 2px $color-yellow;
+            }
         }
     }
 }
