@@ -44,6 +44,7 @@
 
                 var id = html[0]['id'];
                 var classes = html[0]['classList']['value'];
+
                 var innerText = html[0]['innerText'];
 
                 //console.log(html[0]['attributes']);
@@ -53,13 +54,16 @@
                 
                 
                 if(id && nodeName != 'IMG'){
-                element_selector += '#'+id;
+                    element_selector += '#'+id;
                 }
                 if(classes && nodeName != 'IMG'){
-                element_selector += '.'+classes.replace(" ",".");
+                    // replace multiple spaces, tabs, new lines etc.
+                    // cound use for only spaces /  +/g
+                    classes = classes.replace(/\s\s+/g, '.');
+                    element_selector += '.'+classes.replace(" ",".");
                 }
                 if(innerText && nodeName == 'A'){
-                element_selector += ":contains('"+innerText+"')";
+                    element_selector += ":contains('"+innerText+"')";
                 }
                 
 
@@ -142,10 +146,34 @@
                         }
                     });
 
-                    $('.edac-highlight-btn',element.parent()).focus();
+                    // set focus on element
+                    $('.edac-highlight-btn',element.parent()).first().focus();
+
+               
+                        // var css = $('head').find('style[type="text/css"]').add('link[rel="stylesheet"]');
+                        // $('head').data('css', css);
+                        // css.remove();
+
+
+                        // $('a#turn_off').click(function(evt) {
+                        //     evt.preventDefault();
+                        //     var css = $('head').find('style[type="text/css"]').add('link[rel="stylesheet"]');
+                        //     $('head').data('css', css);
+                        //     css.remove();
+                        // });
+                    
+                        // $('a#turn_on').click(function(evt) {
+                        //     evt.preventDefault();
+                        //     var css = $('head').data('css');
+                        //     console.info(css);
+                        //     if (css) {
+                        //         $('head').append(css); 
+                        //     }
+                        // });
+                    
                     
                 }else{
-                    alert('Accessibility Checker con not find the element on the page.');
+                    alert('Accessibility Checker could not find the element on the page.');
                 }                
             
             } else {
