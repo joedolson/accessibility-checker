@@ -1138,7 +1138,7 @@ function edac_details_ajax(){
 
 									$html .= '<button class="edac-details-rule-records-record-actions-ignore'.$ignore_class.'">'.EDAC_SVG_IGNORE_ICON.'<span class="edac-details-rule-records-record-actions-ignore-label">'.$ignore_label.'</span></button>';
 
-									$html .= '<button class="edac-details-rule-records-record-actions-highlight"><span class="dashicons dashicons-visibility"></span>View</button>';
+									//$html .= '<button class="edac-details-rule-records-record-actions-highlight"><span class="dashicons dashicons-visibility"></span>View</button>';
 
 									$html .= '<a href="'.get_the_permalink($postid).'?edac='.$id.'" class="edac-details-rule-records-record-actions-highlight-front" target="_blank" aria-label="'.__('View, opens a new window','edac').'" ><span class="dashicons dashicons-welcome-view-site"></span>View on page</a>';
 									
