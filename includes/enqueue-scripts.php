@@ -48,7 +48,8 @@ function edac_enqueue_scripts(){
 		array(
 			'postID' => $post_id,
 			'nonce' => wp_create_nonce('ajax-nonce'),
-			'ajaxurl' => admin_url('admin-ajax.php')
+			'ajaxurl' => admin_url('admin-ajax.php'),
+			'loggedIn' => is_user_logged_in()
 		)
 	);
 
